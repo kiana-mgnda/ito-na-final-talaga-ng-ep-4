@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter For You</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif}
+  body{
+    background:#ffd9e8;
+    color:#6f2947;
+    overflow-x:hidden;
+  }
+  .page{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:28px 18px;
+    position:relative;
+  }
+  .heart-row{
+    text-align:center;
+    color:#c94f78;
+    font-size:28px;
+    letter-spacing:9px;
+    margin:4px 0 18px;
+  }
+  .music{
+    position:fixed;
+    top:14px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:20;
+    display:flex;
+    gap:7px;
+    align-items:center;
+    background:#fff1f6;
+    border:1px solid #d99ab5;
+    border-radius:20px;
+    padding:6px 10px;
+    box-shadow:0 3px 10px #b56a8940;
+    font-family:Arial,sans-serif;
+    font-size:12px;
+  }
+  .music button{
+    border:0;background:#fff;border-radius:50%;width:32px;height:32px;
+    cursor:pointer;color:#9b4568;font-size:16px;
+    box-shadow:0 1px 5px #9d48652b;
+  }
+  h1{
+    font-size:clamp(25px,5vw,40px);
+    font-style:italic;
+    font-weight:500;
+    margin:0 0 18px;
+  }
+  .subtitle{font-family:cursive;font-size:17px;margin-bottom:25px}
+  .metal{
+    width:min(330px,85vw);
+    height:42px;
+    border-radius:7px;
+    border:2px solid #999;
+    background:linear-gradient(#e9e9e9,#bdbdbd 48%,#ededed);
+    box-shadow:inset 0 2px 3px #fff,0 3px 5px #8d657255;
+    display:flex;align-items:center;justify-content:center;
+    color:#777;font-family:Arial,sans-serif;font-weight:bold;
+    letter-spacing:2px;
+  }
+  .envelope{
+    width:150px;height:105px;margin:24px auto 15px;position:relative;
+    cursor:pointer;transition:.35s transform;
+    filter:drop-shadow(0 8px 7px #9d48654a);
+  }
+  .envelope:hover{transform:translateY(-5px)}
+  .env-body{
+    position:absolute;inset:0;background:#c91d2b;border-radius:2px;
+    border:1px solid #a51521;
+  }
+  .env-body:before,.env-body:after{
+    content:"";position:absolute;bottom:0;width:0;height:0;border-style:solid;
+  }
+  .env-body:before{
+    left:0;border-width:0 75px 62px 0;border-color:transparent #a91623 transparent transparent;
+  }
+  .env-body:after{
+    right:0;border-width:62px 75px 0 0;border-color:#b51926 transparent transparent transparent;
+  }
+  .flap{
+    position:absolute;top:0;left:0;width:0;height:0;
+    border-left:75px solid transparent;border-right:75px solid transparent;
+    border-top:58px solid #e13b46;z-index:3;transform-origin:top;
+    transition:.6s;
+  }
+  .seal{
+    position:absolute;z-index:4;left:50%;top:46px;transform:translateX(-50%);
+    width:29px;height:29px;border-radius:50%;background:#d9a52b;
+    border:2px solid #a87a18;color:#fff;text-align:center;line-height:25px;font-size:14px;
+  }
+  .hint{
+    font-family:Arial,sans-serif;font-size:11px;color:#8b4160;
+    background:#ffeaf2;padding:5px 10px;border-radius:8px
+  }
+  .letter-wrap{display:none;width:min(680px,94vw);margin-top:30px;position:relative}
+  .letter{
+    background:#fffdf9;
+    padding:38px clamp(22px,6vw,60px);
+    box-shadow:0 8px 25px #9d48652b;
+    border:1px solid #ead6d1;
+    min-height:520px;
+    line-height:1.75;
+    color:#563746;
+    font-size:15px;
+    position:relative;
+  }
+  .letter:before{
+    content:"";position:absolute;inset:12px;border:1px solid #efd8df;pointer-events:none;
+  }
+  .letter h2{
+    text-align:center;color:#b24c70;font-style:italic;font-weight:500;
+    font-size:28px;margin:0 0 20px
+  }
+  .letter p{position:relative;z-index:1}
+  .next{
+    margin:20px auto 0;display:block;border:0;border-radius:18px;
+    background:#a94368;color:white;padding:9px 20px;cursor:pointer;
+    font-family:Georgia,serif
+  }
+  .final{display:none;text-align:center}
+  .final h2{font-style:italic;font-weight:500}
+  .small-envelope{transform:scale(.9)}
+  .show .flap{transform:rotateX(180deg)}
+  @media(max-width:500px){
+    .letter{font-size:14px;padding:30px 20px}
+    .photo{width:75px;height:75px}
+  }
+</style>
+</head>
+<body>
+
+
+
+<!-- YouTube player for "Matilda" by Harry Styles -->
+
+
+<section class="page" id="opening">
+  <h1>a letter for you</h1>
+  <div class="subtitle">something I wanted you to read ♡</div>
+
+  <div class="metal">✦ OPEN ME ✦</div>
+
+  <div class="envelope" id="envelope" onclick="openLetter()">
+    <div class="env-body"></div>
+    <div class="flap"></div>
+    <div class="seal">♥</div>
+  </div>
+  <div class="hint">Click on the envelope to open it ♡</div>
+</section>
+
+<section class="page letter-wrap" id="letterPage">
+  <div class="heart-row" aria-label="hearts">♡ ♥ ♡ ♥ ♡</div>
+
+  <article class="letter">
+    <h2>Episode 04 - Whenever You Are Sad</h2>
+
+    <p>Hello Chelle,</p>
+
+    <p>
+      If you're reading this letter, I'm guessing you're having one of those days
+      na feel mo it's a little too much. Maybe ngayon overwhelmed ka, pagod, or
+      simply tired and ngayon din yung day na wala ka na ding energy to makipag
+      usap sa iba. Kung ano man yung reason, I want you to know na it's okay na
+      magkaroon ka ng bad day. Hindi mo kailangang maging strong, happy, or okay
+      all of the time kasi merong talagang time na it's okay to cry, be sad, or
+      magkaroon ng dark days.
+    </p>
+
+    <p>
+      Sometimes nagpu-put tayo ng pressure sa sarili natin para ma-figure out
+      saan tayo nagkakamali. Nagwo-worry tayo about school, sa family, friends,
+      and even yung mga things na hindi pa naman nangyayari. Pero kahit ganon,
+      hindi mo siya kailangang i-solve kaagad. Okay lang mag-pause muna.
+      Okay lang mag-rest. Okay lang na sabihin mong, "Pagod na ako."
+      Hindi ibig sabihin ng "teka muna, pagod na ako" eh you are giving up.
+      Sometimes you are just giving yourself time to breathe and giving yourself
+      time to continue.
+    </p>
+
+    <p><strong>One bad day doesn't define your whole life.</strong></p>
+
+    <p>
+      Whatever problem you're facing right now, if it's heavy or a simple
+      problem, don't forget na lilipas din yan and things will get better.
+      Plus, don't be too harsh to yourself ha. Take your time to breathe,
+      unwind, and rest. Give yourself the kindness na binibigay mo sa
+      loved ones mo.
+    </p>
+
+    <p>
+      Lagi kang nandiyan tuwing meron ako bad and good days, and gusto ko ring
+      sabihin sayo na nandito lang rin ako para sayo!
+    </p>
+
+    <p>
+      You don't have to be okay before coming to me. Wag mong isipin na hindi
+      kita dadamayan, pwede kang pumunta exactly as you are.
+    </p>
+
+    <p>
+      When the good days come, I hope you'll look back and say na,
+      "Yes, nalampasan ko," and ma-realize mo na na-defeat mo yung challenges
+      na finace mo.
+    </p>
+
+    <p>
+      Chelle, if hindi mo day ngayon, okay lang yan. Meron pa namang bukas para
+      mag-start ulit ng panibago. Take each thing one step at a time.
+      And remember, we love you, we appreciate you, and we are always here for you.
+    </p>
+
+    <p>
+      And if no one has told you lately, I'm super duper proud of you!
+      I'm proud na you are continuing. I'm proud of you trying. I'm proud of
+      the person you are becoming.
+    </p>
+
+    <p>
+      I'll be one of the people cheering for you, supporting you, and
+      ireremind kita always na you are loved!
+    </p>
+
+    <p style="text-align:center;font-size:24px;color:#c94f78;">
+      I LOVE YOU! 💗
+    </p>
+
+    <button class="next" onclick="showFinal()">Continue ♡</button>
+  </article>
+</section>
+
+<section class="page final" id="finalPage">
+  <h2>One more thing...</h2>
+  <div class="envelope small-envelope" onclick="restart()">
+    <div class="env-body"></div>
+    <div class="flap"></div>
+    <div class="seal">♥</div>
+  </div>
+  <div class="hint">Click to read it again ♡</div>
+</section>
+
+<script>
+const audio = document.getElementById("music");
+let musicPlaying = false;
+
+function toggleMusic(){
+  if(audio.paused){
+    audio.play().then(()=>{
+      musicPlaying = true;
+      document.getElementById("musicBtn").textContent = "❚❚";
+      document.getElementById("musicText").textContent = "Matilda is playing ♡";
+    }).catch(()=>{
+      document.getElementById("musicText").textContent = "Add music.mp3 first ♡";
+    });
+  }else{
+    audio.pause();
+    musicPlaying = false;
+    document.getElementById("musicBtn").textContent = "♫";
+    document.getElementById("musicText").textContent = "Play Matilda ♡";
+  }
+}
+
+audio.addEventListener("ended", ()=>{
+  musicPlaying = false;
+  document.getElementById("musicBtn").textContent = "♫";
+  document.getElementById("musicText").textContent = "Play Matilda ♡";
+});
+
+function openLetter(){
+  document.getElementById("envelope").classList.add("show");
+  setTimeout(()=>{
+    document.getElementById("opening").style.display="none";
+    document.getElementById("letterPage").style.display="block";
+    window.scrollTo({top:0,behavior:"smooth"});
+  },550);
+}
+
+function showFinal(){
+  document.getElementById("letterPage").style.display="none";
+  document.getElementById("finalPage").style.display="flex";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function restart(){
+  document.getElementById("finalPage").style.display="none";
+  document.getElementById("opening").style.display="flex";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>
